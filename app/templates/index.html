@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!--Search form for the movie-->
+    <form action="/" method="GET">
+        <fieldset>
+            <legend>Search for a movie</legend>
+            <label for="title">Movie title</label>
+            <input id='title' type="text" name="title" placeholder="Search for a movie title">
+            <label for="platform">Platform</label>
+            <select id="platform" name="platform">
+                <option selected disabled>
+                    Select a platform
+                </option>
+                {% for platform in platforms %}
+                    <option value="{{ platform.id }}">{{ platform.name }}</option>
+                {% endfor %}
+            </select>
+            <label for="type">Type</label>
+            <select id="type" name="type">
+                <option selected disabled>
+                    Select a type
+                </option>
+                {% for movie_type in movie_types %}
+                    <option value="{{ movie_type.0 }}">{{ movie_type.0 }}</option>
+                {% endfor %}
+            </select>
+            <label for="rating">Rating</label>
+            <select id="rating" name="rating">
+                <option selected disabled>
+                    Select a rating
+                </option>
+                {% for rating in ratings %}
+                    <option value="{{ rating }}">{{ rating|stringformat:'r' }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Search</button>
+        </fieldset>
+    </form>   
+    <!--Display the movie details-->
+    {% if movies %}
+        {% for movie in movies %}
+            <h1>{{ movie.title }}</h1>
+            <table>
+                <tr>
+                    <td>Type</td>
+                    <td>{{ movie.type }}</td>
+                </tr>
+                <tr>
+                    <td>Platform</td>
+                    <td>{{ movie.platform.name }}</td>
+                </tr>
+                <tr>
+                    <td>Rating</td>
+                    <td>{{ movie.rating }}</td>
+                </tr>
+                <tr>
+                    <td>Release Year</td>
+                    <td>{{ movie.release_year }}</td>
+                </tr>
+                <tr>
+                    <td>Duration</td>
+                    <td>{{ movie.duration }}</td>
+                </tr>
+                <tr>
+                    <td>Country</td>
+                    <td>{{ movie.country }}</td>
+                </tr>
+                <tr>
+                    <td>Director</td>
+                    <td>{{ movie.director }}</td>
+                </tr>
+                <tr>
+                    <td>Cast</td>
+                    <td>{{ movie.cast }}</td>
+                </tr>
+                <tr>
+                    <td>Date Added</td>
+                    <td>
+                        {% if movie.date_added %}
+                            {{ movie.date_added }}
+                        {% endif %}
+                    </td>
+                </tr>
+            </table>
+        {% endfor %}
+    {% endif %}
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        fieldset{
+            display: flex;
+            gap: 0.5rem;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    </style>
+</body>
+</html>
